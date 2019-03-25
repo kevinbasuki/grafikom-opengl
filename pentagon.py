@@ -1,3 +1,6 @@
+# Reference
+# Initialization & rectangle: https://noobtuts.com/python/opengl-introduction
+
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
@@ -7,11 +10,11 @@ width, height = 500, 400								# window size
 
 def draw():												# ondraw is called all the time
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)	# clear the screen
-    glLoadIdentity()									# reset position
+    #glLoadIdentity()									# reset position
     refresh2d(width, height)							# set mode to 2d
         
     glColor3f(0.0, 1.0, 0.0)							# set color to green
-    draw_pentagon(50, 50, 200, 100)						# rect at (10, 10) with width 200, height 100
+    draw_pentagon(50, 50, 200, 100)						# pentagon at (50, 50) with width 200, height 100
     
     glutSwapBuffers()									# important for double buffering
     
@@ -30,7 +33,7 @@ def draw_pentagon(x, y, width, height):
     glVertex2f(x + 50, y)
     glVertex2f(x + width - 50, y)
     glVertex2f(x + width, y + height)
-    glVertex2f(x + width/2, y + height + 70)
+    glVertex2f(x + width/2, y + height + 100)
     glVertex2f(x, y + height)
     glEnd() 
 
