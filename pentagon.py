@@ -14,7 +14,11 @@ def draw():												# ondraw is called all the time
     refresh2d(width, height)							# set mode to 2d
         
     glColor3f(0.0, 1.0, 0.0)							# set color to green
-    draw_pentagon(50, 50, 200, 100)						# pentagon at (50, 50) with width 200, height 100
+    draw_triangle(50, 50, 200, 100)						# pentagon at (50, 50) with width 200, height 100
+    glColor3f(0.2, 0.8, 0.0)
+    draw_triangle2(50, 50, 200, 100)
+    glColor3f(0.4, 0.6, 0.0)
+    draw_triangle3(50, 50, 200, 100)
     
     glutSwapBuffers()									# important for double buffering
     
@@ -27,14 +31,34 @@ def draw_rect(x, y, width, height):
     glVertex2f(x, y + height)							# top left point
     glEnd() 
 
-def draw_pentagon(x, y, width, height):
+def draw_triangle(x, y, width, height):
 	# draw a pentagon
-    glBegin(GL_POLYGON)									# start drawing a pentagon
+    glBegin(GL_TRIANGLES)									# start drawing a pentagon
     glVertex2f(x + 50, y)
+    #glVertex2f(x + width - 50, y)
+    #glVertex2f(x + width, y + height)
+    glVertex2f(x + width/2, y + height + 100)
+    glVertex2f(x, y + height)
+    glEnd() 
+
+def draw_triangle2(x, y, width, height):
+	# draw a pentagon
+    glBegin(GL_TRIANGLES)									# start drawing a pentagon
+    glVertex2f(x + 50, y)
+    glVertex2f(x + width - 50, y)
+    #glVertex2f(x + width, y + height)
+    glVertex2f(x + width/2, y + height + 100)
+    #glVertex2f(x, y + height)
+    glEnd() 
+
+def draw_triangle3(x, y, width, height):
+	# draw a pentagon
+    glBegin(GL_TRIANGLES)									# start drawing a pentagon
+    #glVertex2f(x + 50, y)
     glVertex2f(x + width - 50, y)
     glVertex2f(x + width, y + height)
     glVertex2f(x + width/2, y + height + 100)
-    glVertex2f(x, y + height)
+    #glVertex2f(x, y + height)
     glEnd() 
 
 def refresh2d(width, height):
