@@ -9,67 +9,35 @@ window = 0												# glut window number
 width, height = 500, 400								# window size
 
 def draw():												# ondraw is called all the time
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)	# clear the screen
-    #glLoadIdentity()									# reset position
-    refresh2d(width, height)							# set mode to 2d
-        
-    glColor3f(0.0, 1.0, 0.0)							# set color to green
-    draw_triangle(50, 50, 200, 100)						# pentagon at (50, 50) with width 200, height 100
-    glColor3f(0.2, 0.8, 0.0)
-    draw_triangle2(50, 50, 200, 100)
-    glColor3f(0.4, 0.6, 0.0)
-    draw_triangle3(50, 50, 200, 100)
-    
-    glutSwapBuffers()									# important for double buffering
-    
-def draw_rect(x, y, width, height):
-	# draw a rectangle
-    glBegin(GL_QUADS)									# start drawing a rectangle
-    glVertex2f(x, y)									# bottom left point
-    glVertex2f(x + width, y)							# bottom right point
-    glVertex2f(x + width, y + height)					# top right point
-    glVertex2f(x, y + height)							# top left point
-    glEnd() 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)	# clear the screen
+	#glLoadIdentity()									# reset position
+	refresh2d(width, height)							# set mode to 2d
 
-def draw_triangle(x, y, width, height):
-	# draw a pentagon
-    glBegin(GL_TRIANGLES)									# start drawing a pentagon
-    glVertex2f(x + 50, y)
-    #glVertex2f(x + width - 50, y)
-    #glVertex2f(x + width, y + height)
-    glVertex2f(x + width/2, y + height + 100)
-    glVertex2f(x, y + height)
-    glEnd() 
+	glColor3f(0.0, 1.0, 0.0)							# set color to green
+	draw_triangle(100, 50, 150, 250, 50, 150)			# draw a pentagon with triangle
+	glColor3f(0.2, 0.8, 0.0)
+	draw_triangle(100, 50, 200, 50, 150, 250)
+	glColor3f(0.4, 0.6, 0.0)
+	draw_triangle(200, 50, 250, 150, 150, 250)
+	
+	glutSwapBuffers()									# important for double buffering
 
-def draw_triangle2(x, y, width, height):
-	# draw a pentagon
-    glBegin(GL_TRIANGLES)									# start drawing a pentagon
-    glVertex2f(x + 50, y)
-    glVertex2f(x + width - 50, y)
-    #glVertex2f(x + width, y + height)
-    glVertex2f(x + width/2, y + height + 100)
-    #glVertex2f(x, y + height)
-    glEnd() 
-
-def draw_triangle3(x, y, width, height):
-	# draw a pentagon
-    glBegin(GL_TRIANGLES)									# start drawing a pentagon
-    #glVertex2f(x + 50, y)
-    glVertex2f(x + width - 50, y)
-    glVertex2f(x + width, y + height)
-    glVertex2f(x + width/2, y + height + 100)
-    #glVertex2f(x, y + height)
-    glEnd() 
+def draw_triangle(x1, y1, x2, y2, x3, y3):
+	# draw a triangle
+	glBegin(GL_TRIANGLES)								# start drawing a triangle
+	glVertex2f(x1, y1)
+	glVertex2f(x2, y2)
+	glVertex2f(x3, y3)
+	glEnd()
 
 def refresh2d(width, height):
 	# set mode to 2d
-    glViewport(0, 0, width, height)
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity()
-    glOrtho(0.0, width, 0.0, height, 0.0, 1.0)
-    glMatrixMode (GL_MODELVIEW)
-    glLoadIdentity()
-
+	glViewport(0, 0, width, height)
+	glMatrixMode(GL_PROJECTION)
+	glLoadIdentity()
+	glOrtho(0.0, width, 0.0, height, 0.0, 1.0)
+	glMatrixMode (GL_MODELVIEW)
+	glLoadIdentity()
 
 # initialization
 glutInit()												# initialize glut
