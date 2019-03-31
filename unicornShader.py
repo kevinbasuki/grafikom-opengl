@@ -51,15 +51,8 @@ shader = None
 def init_data():
     with open("input.json") as json_file:
         data = json.load(json_file)
-        for i in range(len(data)):
-            color.append(random.random())
-    i = 0
-    with open("input.json") as json_file:
-        data = json.load(json_file)
-        
+        i = 0
         for key,value in data.items():
-            color_this = color[int(key.strip("triangle"))-1]
-
             for key,point in value.items():
                 x = float(point[0])
                 y = float(point[1])
@@ -70,9 +63,9 @@ def init_data():
                 vertices.append((y-ht)/ht)
                 vertices.append(0.0)
 
-                colors.append(1.0)
-                colors.append(color_this)
-                colors.append(0.0)
+                colors.append(random.random())
+                colors.append(0.5)
+                colors.append(0.75)
 
                 indices.append(i)
                 i = i + 1
