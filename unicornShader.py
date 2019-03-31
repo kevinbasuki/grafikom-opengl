@@ -5,6 +5,8 @@ import sys
 import json
 import random
 
+# Code references = https://gist.github.com/ousttrue/c4ae334fc1505cdf4cd7
+
 class Shader(object):
 
     def initShader(self, vertex_shader_source, fragment_shader_source):
@@ -61,8 +63,8 @@ def init_data():
             for key,point in value.items():
                 x = float(point[0])
                 y = float(point[1])
-                wd = width/2
-                ht = height/2
+                wd = (width+50)/2
+                ht = (height+50)/2
 
                 vertices.append((x-wd)/wd)
                 vertices.append((y-ht)/ht)
