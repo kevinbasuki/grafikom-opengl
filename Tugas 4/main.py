@@ -4,6 +4,7 @@ import numpy
 from pyrr import matrix44
 from Camera import Camera
 from ShaderLoader import *
+import TextureLoader
 import math
 
 #Constants
@@ -127,77 +128,77 @@ def main():
     cube = [
         #Badan Mobil
         #front
-        -1.0, -1.0, 1.0,
-        1.0, -1.0, 1.0,
-        1.0, 1.0, 1.0,
-        -1.0, 1.0, 1.0,
+        -1.0, -1.0, 1.0, 0.167, 0.0,
+        1.0, -1.0, 1.0, 0.833, 0.0,
+        1.0, 1.0, 1.0, 0.833, 1.0,
+        -1.0, 1.0, 1.0, 0.167, 1.0,
 
         #right
-        1.0, -1.0, 1.0,
-        1.0, -1.0, -2.0,
-        1.0, 1.0, -2.0,
-        1.0, 1.0, 1.0,
+        1.0, -1.0, 1.0, 0.0, 0.0,
+        1.0, -1.0, -2.0, 1.0, 0.0,
+        1.0, 1.0, -2.0, 1.0, 1.0,
+        1.0, 1.0, 1.0, 0.0, 1.0,
 
         #back
-        -1.0, -1.0, -2.0,
-        1.0, -1.0, -2.0,
-        1.0, 1.0, -2.0,
-        -1.0, 1.0, -2.0,
+        -1.0, -1.0, -2.0, 0.167, 0.0,
+        1.0, -1.0, -2.0, 0.833, 0.0,
+        1.0, 1.0, -2.0, 0.833, 1.0,
+        -1.0, 1.0, -2.0, 0.167, 1.0,
 
         #left
-        -1.0, -1.0, 1.0,
-        -1.0, -1.0, -2.0,
-        -1.0, 1.0, -2.0,
-        -1.0, 1.0, 1.0,
+        -1.0, -1.0, 1.0, 0.0, 0.0,
+        -1.0, -1.0, -2.0, 1.0, 0.0,
+        -1.0, 1.0, -2.0, 1.0, 1.0,
+        -1.0, 1.0, 1.0, 0.0, 1.0, 
 
         #top
-        -1.0, 1.0, 1.0,
-        1.0, 1.0, 1.0,
-        1.0, 1.0, -2.0,
-        -1.0, 1.0, -2.0,
+        -1.0, 1.0, 1.0, 0.0, 0.0,
+        1.0, 1.0, 1.0, 1.0, 0.0,
+        1.0, 1.0, -2.0, 1.0, 1.0,
+        -1.0, 1.0, -2.0, 0.0, 1.0, 
 
         #bottom
-        -1.0, -1.0, 1.0,
-        1.0, -1.0, 1.0,
-        1.0, -1.0, -2.0,
-        -1.0, -1.0, -2.0,
+        -1.0, -1.0, 1.0, 0.0, 0.0,
+        1.0, -1.0, 1.0, 1.0, 0.0,
+        1.0, -1.0, -2.0, 1.0, 1.0,
+        -1.0, -1.0, -2.0, 0.0, 1.0, 
 
         #Depan Mobil
         #front
-        -1.0, -1.0, 2.0,
-        1.0, -1.0, 2.0,
-        1.0, 0, 2.0,
-        -1.0, 0, 2.0,
+        -1.0, -1.0, 2.0, 0.0, 0.0,
+        1.0, -1.0, 2.0, 1.0, 0.0,
+        1.0, 0, 2.0, 1.0, 1.0,
+        -1.0, 0, 2.0, 0.0, 1.0, 
 
         #right
-        1.0, -1.0, 2.0,
-        1.0, -1.0, 1.0,
-        1.0, 0, 1.0,
-        1.0, 0, 2.0,
+        1.0, -1.0, 2.0, 0.167, 0.0,
+        1.0, -1.0, 1.0, 0.833, 0.0,
+        1.0, 0, 1.0, 0.833, 1.0,
+        1.0, 0, 2.0, 0.167, 1.0,
 
         #back
-        -1.0, -1.0, 1.0,
-        1.0, -1.0, 1.0,
-        1.0, 0, 1.0,
-        -1.0, 0, 1.0,
+        -1.0, -1.0, 1.0, 0.0, 0.0,
+        1.0, -1.0, 1.0, 1.0, 0.0,
+        1.0, 0, 1.0, 1.0, 1.0,
+        -1.0, 0, 1.0, 0.0, 1.0, 
 
         #left
-        -1.0, -1.0, 2.0, 
-        -1.0, -1.0, 1.0,
-        -1.0, 0, 1.0,
-        -1.0, 0, 2.0,
+        -1.0, -1.0, 2.0, 0.167, 0.0,
+        -1.0, -1.0, 1.0, 0.833, 0.0,
+        -1.0, 0, 1.0, 0.833, 1.0,
+        -1.0, 0, 2.0, 0.167, 1.0,
 
         #top
-        -1.0, 0, 2.0,
-        1.0, 0, 2.0,
-        1.0, 0, 1.0,
-        -1.0, 0, 1.0,
+        -1.0, 0, 2.0, 0.0, 0.0,
+        1.0, 0, 2.0, 1.0, 0.0,
+        1.0, 0, 1.0, 1.0, 1.0,
+        -1.0, 0, 1.0, 0.0, 1.0, 
 
         #bottom
-        -1.0, -1.0, 2.0,
-        1.0, -1.0, 2.0, 
-        1.0, -1.0, 1.0,
-        -1.0, -1.0, 1.0
+        -1.0, -1.0, 2.0, 0.0, 0.0,
+        1.0, -1.0, 2.0, 1.0, 0.0,
+        1.0, -1.0, 1.0, 1.0, 1.0,
+        -1.0, -1.0, 1.0, 0.0, 1.0 
     ]
 
     cube = numpy.array(cube, dtype=numpy.float32)
@@ -235,16 +236,24 @@ def main():
     wheel_proj_loc = glGetUniformLocation(wheel_program, "proj")
     circle = generateCircleArray(0, 0, 0, 0.4, 0.2)
 
-    VAO = glGenVertexArrays(1)
-    glBindVertexArray(VAO)
-    VBO = glGenBuffers(1)
-    glBindBuffer(GL_ARRAY_BUFFER, VBO)
+    VAO_wheel = glGenVertexArrays(1)
+    glBindVertexArray(VAO_wheel)
+    VBO_wheel = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_wheel)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, circle.itemsize * 3, ctypes.c_void_p(0))
-        
+
+    VAO_car = glGenVertexArrays(1)
+    glBindVertexArray(VAO_car)
+    VBO_car = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_car)
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, cube.itemsize * 5, ctypes.c_void_p(0))
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, cube.itemsize * 5, ctypes.c_void_p(12))
+
     EBO = glGenBuffers(1)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.itemsize * len(indices), indices, GL_STATIC_DRAW)
 
+    metal = TextureLoader.load_texture("Textures/badan_samping.jpg")
 
     while not glfw.window_should_close(window):
         glfw.poll_events()
@@ -253,7 +262,8 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         #Gambar Roda
-        glBindBuffer(GL_ARRAY_BUFFER, VBO)
+        glBindVertexArray(VAO_wheel)
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_wheel)
         glBufferData(GL_ARRAY_BUFFER, circle.itemsize * len(circle), circle, GL_STATIC_DRAW)
 
         glEnableVertexAttribArray(0)
@@ -271,13 +281,16 @@ def main():
             glUniformMatrix4fv(wheel_model_loc, 1, GL_FALSE, wheel_model)
             glDrawArrays(GL_TRIANGLES, 0, len(circle))
 
-
         #Gambar Mobil
-        glBindBuffer(GL_ARRAY_BUFFER, VBO)
+        glBindVertexArray(VAO_car)
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_car)
         glBufferData(GL_ARRAY_BUFFER, cube.itemsize * len(cube), cube, GL_STATIC_DRAW)
 
         # position
         glEnableVertexAttribArray(0)
+
+        # textures
+        glEnableVertexAttribArray(1)
 
         glUseProgram(car_program)
 
@@ -287,6 +300,7 @@ def main():
 
         car_model = matrix44.create_from_translation((0,0,0))
         glUniformMatrix4fv(car_model_loc, 1, GL_FALSE, car_model)
+        glBindTexture(GL_TEXTURE_2D, metal)
         glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, None)
 
         glfw.swap_buffers(window)
