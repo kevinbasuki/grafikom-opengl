@@ -28,6 +28,9 @@ def compile_shader(vs_file, fs_file):
     glAttachShader(shader, fs)
 
     glLinkProgram(shader)
+    if not glGetProgramiv(shader, GL_LINK_STATUS):
+        raise Exception('failed to link program "%s":\n%s' % (shader, glGetProgramInfoLog(shader).decode()))
+    
     glValidateProgram(shader)
     glDeleteShader(vs)
     glDeleteShader(fs)
