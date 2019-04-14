@@ -8,7 +8,7 @@ import TextureLoader
 import math
 
 #Constants
-TRIANGLE_AMOUNT = 100
+TRIANGLE_AMOUNT = 50
 PI = 3.14159265359
 
 def window_resize(window, width, height):
@@ -286,7 +286,7 @@ def main():
 
         #Gambar Roda
         glBindVertexArray(VAO_car)
-        glBindBuffer(GL_ARRAY_BUFFER, VAO_car)
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_car)
         glBufferData(GL_ARRAY_BUFFER, circle.itemsize * len(circle), circle, GL_STATIC_DRAW)
 
         glEnableVertexAttribArray(0)
@@ -307,7 +307,7 @@ def main():
             glDrawArrays(GL_TRIANGLES, 0, len(circle))
 
         glBindVertexArray(VAO_wheel)
-        glBindBuffer(GL_ARRAY_BUFFER, VAO_wheel)
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_wheel)
         glBufferData(GL_ARRAY_BUFFER, thickness.itemsize * len(thickness), thickness, GL_STATIC_DRAW)
 
         glEnableVertexAttribArray(0)
