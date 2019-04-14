@@ -8,7 +8,7 @@ import TextureLoader
 import math
 
 #Constants
-TRIANGLE_AMOUNT = 1000
+TRIANGLE_AMOUNT = 100
 PI = 3.14159265359
 
 def window_resize(window, width, height):
@@ -16,47 +16,72 @@ def window_resize(window, width, height):
 
 def generateCircleArray(x, y, z, radius, thickness):
     result = []
+    height = []
     for i in range(TRIANGLE_AMOUNT):
         #buat lingkaran
         result.append(x)
         result.append(y)
         result.append(z)
+        result.append(0.5)
+        result.append(0.5)
         result.append(x)
         result.append(y + radius * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
         result.append(z + radius * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.5 + 0.5 * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.5 + 0.5 * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
         result.append(x)
         result.append(y + radius * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
         result.append(z + radius * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.5 + 0.5 * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.5 + 0.5 * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+
+        result.append(x + thickness)
+        result.append(y)
+        result.append(z)
+        result.append(0.5)
+        result.append(0.5)
+        result.append(x + thickness)
+        result.append(y + radius * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(z + radius * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.5 + 0.5 * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.5 + 0.5 * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(x + thickness)
+        result.append(y + radius * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(z + radius * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.5 + 0.5 * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.5 + 0.5 * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+
 
         #Buat ketebalan
         #segitiga 1
-        result.append(x)
-        result.append(y + radius * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
-        result.append(z + radius * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(x)
+        height.append(y + radius * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(z + radius * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
 
-        result.append(x)
-        result.append(y + radius * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
-        result.append(z + radius * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(x)
+        height.append(y + radius * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(z + radius * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
         
-        result.append(x + thickness)
-        result.append(y + radius * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
-        result.append(z + radius * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(x + thickness)
+        height.append(y + radius * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(z + radius * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
         #segitiga 2
-        result.append(x + thickness)
-        result.append(y + radius * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
-        result.append(z + radius * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(x + thickness)
+        height.append(y + radius * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(z + radius * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
         
-        result.append(x + thickness)
-        result.append(y + radius * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
-        result.append(z + radius * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(x + thickness)
+        height.append(y + radius * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(z + radius * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
         
-        result.append(x)
-        result.append(y + radius * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
-        result.append(z + radius * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(x)
+        height.append(y + radius * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
+        height.append(z + radius * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
         
 
     result = numpy.array(result, dtype=numpy.float32)
-    return result
+    height = numpy.array(height, dtype=numpy.float32)
+    return result, height
 
 cam = Camera()
 keys = [False] * 1024
@@ -230,7 +255,7 @@ def main():
     wheel_model_loc = glGetUniformLocation(wheel_program, "model")
     wheel_view_loc = glGetUniformLocation(wheel_program, "view")
     wheel_proj_loc = glGetUniformLocation(wheel_program, "proj")
-    circle = generateCircleArray(0, 0, 0, 0.4, 0.2)
+    circle, thickness = generateCircleArray(0, 0, 0, 0.4, 0.2)
 
     VAO_wheel = glGenVertexArrays(1)
     glBindVertexArray(VAO_wheel)
@@ -251,7 +276,8 @@ def main():
 
     metal = TextureLoader.load_texture("Textures/badan_samping.jpg")
     metal2 = TextureLoader.load_texture("Textures/kap_samping.jpg")
-
+    roda = TextureLoader.load_texture("Textures/roda.jpg")
+    
     while not glfw.window_should_close(window):
         glfw.poll_events()
         do_movement()
@@ -259,13 +285,14 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         #Gambar Roda
-        glBindVertexArray(VAO_wheel)
-        glBindBuffer(GL_ARRAY_BUFFER, VBO_wheel)
+        glBindVertexArray(VAO_car)
+        glBindBuffer(GL_ARRAY_BUFFER, VAO_car)
         glBufferData(GL_ARRAY_BUFFER, circle.itemsize * len(circle), circle, GL_STATIC_DRAW)
 
         glEnableVertexAttribArray(0)
+        glEnableVertexAttribArray(1)
 
-        glUseProgram(wheel_program)
+        glUseProgram(car_program)
 
         wheel_positions = [(1.0, -1.0, 1.0), (-1.2, -1.0, 1.0), (-1.2, -1.0, -2.0), (1.0, -1.0, -2.0)]
 
@@ -276,7 +303,25 @@ def main():
         for i in range(len(wheel_positions)):
             wheel_model = matrix44.create_from_translation(wheel_positions[i])
             glUniformMatrix4fv(wheel_model_loc, 1, GL_FALSE, wheel_model)
+            glBindTexture(GL_TEXTURE_2D, roda)
             glDrawArrays(GL_TRIANGLES, 0, len(circle))
+
+        glBindVertexArray(VAO_wheel)
+        glBindBuffer(GL_ARRAY_BUFFER, VAO_wheel)
+        glBufferData(GL_ARRAY_BUFFER, thickness.itemsize * len(thickness), thickness, GL_STATIC_DRAW)
+
+        glEnableVertexAttribArray(0)
+
+        glUseProgram(wheel_program)
+
+        glUniformMatrix4fv(wheel_proj_loc, 1, GL_FALSE, projection)
+
+        glUniformMatrix4fv(wheel_view_loc, 1, GL_FALSE, view)
+
+        for i in range(len(wheel_positions)):
+            wheel_model = matrix44.create_from_translation(wheel_positions[i])
+            glUniformMatrix4fv(wheel_model_loc, 1, GL_FALSE, wheel_model)
+            glDrawArrays(GL_TRIANGLES, 0, len(thickness))
 
         #Gambar Mobil
         glBindVertexArray(VAO_car)
