@@ -125,7 +125,7 @@ def main():
     glfw.set_key_callback(window, key_callback)
     glfw.set_cursor_pos_callback(window, mouse_callback)
 
-    cube = [
+    car_back = [
         #Badan Mobil
         #front
         -1.0, -1.0, 1.0, 0.167, 0.0,
@@ -161,8 +161,10 @@ def main():
         -1.0, -1.0, 1.0, 0.0, 0.0,
         1.0, -1.0, 1.0, 1.0, 0.0,
         1.0, -1.0, -2.0, 1.0, 1.0,
-        -1.0, -1.0, -2.0, 0.0, 1.0, 
-
+        -1.0, -1.0, -2.0, 0.0, 1.0
+    ]
+    
+    car_front = [
         #Depan Mobil
         #front
         -1.0, -1.0, 2.0, 0.0, 0.0,
@@ -201,7 +203,8 @@ def main():
         -1.0, -1.0, 1.0, 0.0, 1.0 
     ]
 
-    cube = numpy.array(cube, dtype=numpy.float32)
+    car_back = numpy.array(car_back, dtype=numpy.float32)
+    car_front = numpy.array(car_front, dtype=numpy.float32)
     indices = [
         0,1,2,2,3,0,
         4,5,6,6,7,4,
@@ -209,13 +212,6 @@ def main():
         12,13,14,14,15,12,
         16,17,18,18,19,16,
         20,21,22,22,23,20,
-
-        24,25,26,26,27,24,
-        28,29,30,30,31,28,
-        32,33,34,34,34,32,
-        36,37,38,38,39,36,
-        40,41,42,42,43,40,
-        44,45,46,46,47,44
     ]
 
     indices = numpy.array(indices, dtype=numpy.uint32)
@@ -246,14 +242,15 @@ def main():
     glBindVertexArray(VAO_car)
     VBO_car = glGenBuffers(1)
     glBindBuffer(GL_ARRAY_BUFFER, VBO_car)
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, cube.itemsize * 5, ctypes.c_void_p(0))
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, cube.itemsize * 5, ctypes.c_void_p(12))
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, car_back.itemsize * 5, ctypes.c_void_p(0))
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, car_back.itemsize * 5, ctypes.c_void_p(12))
 
     EBO = glGenBuffers(1)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.itemsize * len(indices), indices, GL_STATIC_DRAW)
 
     metal = TextureLoader.load_texture("Textures/badan_samping.jpg")
+    metal2 = TextureLoader.load_texture("Textures/kap_samping.jpg")
 
     while not glfw.window_should_close(window):
         glfw.poll_events()
@@ -284,7 +281,7 @@ def main():
         #Gambar Mobil
         glBindVertexArray(VAO_car)
         glBindBuffer(GL_ARRAY_BUFFER, VBO_car)
-        glBufferData(GL_ARRAY_BUFFER, cube.itemsize * len(cube), cube, GL_STATIC_DRAW)
+        glBufferData(GL_ARRAY_BUFFER, car_back.itemsize * len(car_back), car_back, GL_STATIC_DRAW)
 
         # position
         glEnableVertexAttribArray(0)
@@ -301,6 +298,10 @@ def main():
         car_model = matrix44.create_from_translation((0,0,0))
         glUniformMatrix4fv(car_model_loc, 1, GL_FALSE, car_model)
         glBindTexture(GL_TEXTURE_2D, metal)
+        glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, None)
+
+        glBufferData(GL_ARRAY_BUFFER, car_front.itemsize * len(car_front), car_front, GL_STATIC_DRAW)
+        glBindTexture(GL_TEXTURE_2D, metal2)
         glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, None)
 
         glfw.swap_buffers(window)
