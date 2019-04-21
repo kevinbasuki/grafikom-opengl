@@ -268,6 +268,7 @@ def main():
     car_model_loc = glGetUniformLocation(car_program, "model")
     car_view_loc = glGetUniformLocation(car_program, "view")
     car_proj_loc = glGetUniformLocation(car_program, "proj")
+    car_cam_pos = glGetUniformLocation(car_program, "viewPos")
 
     wheel_model_loc = glGetUniformLocation(wheel_program, "model")
     wheel_view_loc = glGetUniformLocation(wheel_program, "view")
@@ -300,6 +301,7 @@ def main():
         glfw.poll_events()
         do_movement()
         view = cam.get_view_matrix()
+        camera_position = cam.get_cam_pos()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         #Gambar Roda
@@ -318,6 +320,7 @@ def main():
         glUniformMatrix4fv(car_proj_loc, 1, GL_FALSE, projection)
 
         glUniformMatrix4fv(car_view_loc, 1, GL_FALSE, view)
+        glUniform3fv(car_cam_pos, 1, camera_position)
 
         for i in range(len(wheel_positions)):
             wheel_model = matrix44.create_from_translation(wheel_positions[i])

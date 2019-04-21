@@ -13,6 +13,9 @@ class Camera:
         self.yaw = -90.0
         self.pitch = 0.0
 
+    def get_cam_pos(self):
+        return self.camera_pos
+
     def get_view_matrix(self):
         return self.look_at(self.camera_pos, self.camera_pos + self.camera_front, self.camera_up)
 
