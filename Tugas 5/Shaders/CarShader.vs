@@ -1,5 +1,5 @@
 #version 330
-layout(location = 0) in vec3 position;
+layout(location = 0) in vec3 inposition;
 layout(location = 1) in vec2 texture_cords;
 layout(location = 2) in vec3 normal;
 
@@ -13,10 +13,9 @@ out vec3 normal_vs;
 
 void main()
 {
-    vec4 position = proj * view * model * vec4(position, 1.0f);
-    gl_Position =  position;
-
+    gl_Position = proj * view * model * vec4(inposition, 1.0f);
+    
     textures = texture_cords;
-    position_vs = position.xyz;
-    normal_vs = normal;
+    position_vs = vec3(model * vec4(inposition, 1.0f));
+    normal_vs = mat3(transpose(inverse(model))) * normal;
 }
