@@ -6,7 +6,7 @@ uniform vec4 color_specular = vec4(1, 1, 1, 1.0);
 uniform float shininess = 50.0f;
 uniform vec3 viewPos;
 
-uniform vec3 light_position = vec3(6.0, 6.0, 6.0);
+uniform vec3 light_position = vec3(2.0, 3.0, 4.0);
 
 in vec3 position_vs;
 in vec3 normal_vs;
@@ -26,10 +26,10 @@ void main()
     float diff = max(dot(normal, light_direction), 0.0);
     vec4 diffuse = diff * color_diffuse;
 
-    float specularStrength = 0.5;
+    float specularStrength = 1;
     vec3 viewDir = normalize(viewPos - position_vs);
     vec3 reflectDir = reflect(-light_direction, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 256);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     vec4 specular = specularStrength * spec * color_specular;    
 
     vec4 objectColor = (ambient+diffuse+specular) * texture(tex_sampler, textures);
