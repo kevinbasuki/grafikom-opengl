@@ -21,7 +21,7 @@ void main()
     vec3 half_vector = normalize(light_direction + normalize(position_vs));
     float diffuse = max(0.0, dot(normal, light_direction));
     float specular = pow(max(0.0, dot(normal_vs, half_vector)), shininess);
-    
+
     float ambientStrength = 0.1;
 
     vec4 objectColor = texture(tex_sampler, textures);
