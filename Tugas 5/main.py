@@ -24,33 +24,50 @@ def generateCircleArray(x, y, z, radius, thickness):
         result.append(z)
         result.append(0.5)
         result.append(0.5)
+        result.append(0.0)
+        result.append(1.0)
+        result.append(0.0)
         result.append(x)
         result.append(y + radius * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
         result.append(z + radius * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
         result.append(0.5 + 0.5 * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
         result.append(0.5 + 0.5 * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.0)
+        result.append(1.0)
+        result.append(0.0)
         result.append(x)
         result.append(y + radius * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
         result.append(z + radius * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
         result.append(0.5 + 0.5 * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
         result.append(0.5 + 0.5 * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.0)
+        result.append(1.0)
+        result.append(0.0)
 
         result.append(x + thickness)
         result.append(y)
         result.append(z)
         result.append(0.5)
         result.append(0.5)
+        result.append(0.0)
+        result.append(-1.0)
+        result.append(0.0)
         result.append(x + thickness)
         result.append(y + radius * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
         result.append(z + radius * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
         result.append(0.5 + 0.5 * math.cos(i * 2 * PI / TRIANGLE_AMOUNT))
         result.append(0.5 + 0.5 * math.sin(i * 2 * PI / TRIANGLE_AMOUNT))
+        result.append(0.0)
+        result.append(-1.0)
+        result.append(0.0)
         result.append(x + thickness)
         result.append(y + radius * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
         result.append(z + radius * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
         result.append(0.5 + 0.5 * math.cos((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
         result.append(0.5 + 0.5 * math.sin((i + 1) * 2 * PI / TRIANGLE_AMOUNT))
-
+        result.append(0.0)
+        result.append(-1.0)
+        result.append(0.0)
 
         #Buat ketebalan
         #segitiga 1
@@ -153,79 +170,79 @@ def main():
     car_back = [
         #Badan Mobil
         #front
-        -1.0, -1.0, 1.0, 0.167, 0.0,
-        1.0, -1.0, 1.0, 0.833, 0.0,
-        1.0, 1.0, 1.0, 0.833, 1.0,
-        -1.0, 1.0, 1.0, 0.167, 1.0,
+        -1.0, -1.0, 1.0, 0.167, 0.0, 0.0, 0.0, 1.0,
+        1.0, -1.0, 1.0, 0.833, 0.0, 0.0, 0.0, 1.0,
+        1.0, 1.0, 1.0, 0.833, 1.0, 0.0, 0.0, 1.0,
+        -1.0, 1.0, 1.0, 0.167, 1.0, 0.0, 0.0, 1.0,
 
         #right
-        1.0, -1.0, 1.0, 0.0, 0.0,
-        1.0, -1.0, -2.0, 1.0, 0.0,
-        1.0, 1.0, -2.0, 1.0, 1.0,
-        1.0, 1.0, 1.0, 0.0, 1.0,
+        1.0, -1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,
+        1.0, -1.0, -2.0, 1.0, 0.0, 1.0, 0.0, 0.0,
+        1.0, 1.0, -2.0, 1.0, 1.0, 1.0, 0.0, 0.0,
+        1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0,
 
         #back
-        -1.0, -1.0, -2.0, 0.167, 0.0,
-        1.0, -1.0, -2.0, 0.833, 0.0,
-        1.0, 1.0, -2.0, 0.833, 1.0,
-        -1.0, 1.0, -2.0, 0.167, 1.0,
+        -1.0, -1.0, -2.0, 0.167, 0.0, 0.0, 0.0, -1.0,
+        1.0, -1.0, -2.0, 0.833, 0.0, 0.0, 0.0, -1.0,
+        1.0, 1.0, -2.0, 0.833, 1.0, 0.0, 0.0, -1.0,
+        -1.0, 1.0, -2.0, 0.167, 1.0, 0.0, 0.0, -1.0,
 
         #left
-        -1.0, -1.0, 1.0, 0.0, 0.0,
-        -1.0, -1.0, -2.0, 1.0, 0.0,
-        -1.0, 1.0, -2.0, 1.0, 1.0,
-        -1.0, 1.0, 1.0, 0.0, 1.0, 
+        -1.0, -1.0, 1.0, 0.0, 0.0, -1.0, 0.0, 0.0,
+        -1.0, -1.0, -2.0, 1.0, 0.0, -1.0, 0.0, 0.0,
+        -1.0, 1.0, -2.0, 1.0, 1.0, -1.0, 0.0, 0.0,
+        -1.0, 1.0, 1.0, 0.0, 1.0, -1.0, 0.0, 0.0,
 
         #top
-        -1.0, 1.0, 1.0, 0.0, 0.0,
-        1.0, 1.0, 1.0, 1.0, 0.0,
-        1.0, 1.0, -2.0, 1.0, 1.0,
-        -1.0, 1.0, -2.0, 0.0, 1.0, 
+        -1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0,
+        1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0,
+        1.0, 1.0, -2.0, 1.0, 1.0, 0.0, 1.0, 0.0,
+        -1.0, 1.0, -2.0, 0.0, 1.0, 0.0, 1.0, 0.0,
 
         #bottom
-        -1.0, -1.0, 1.0, 0.0, 0.0,
-        1.0, -1.0, 1.0, 1.0, 0.0,
-        1.0, -1.0, -2.0, 1.0, 1.0,
-        -1.0, -1.0, -2.0, 0.0, 1.0
+        -1.0, -1.0, 1.0, 0.0, 0.0, 0.0, -1.0, 0.0,
+        1.0, -1.0, 1.0, 1.0, 0.0, 0.0, -1.0, 0.0,
+        1.0, -1.0, -2.0, 1.0, 1.0, 0.0, -1.0, 0.0,
+        -1.0, -1.0, -2.0, 0.0, 1.0, 0.0, -1.0, 0.0
     ]
     
     car_front = [
         #Depan Mobil
         #front
-        -1.0, -1.0, 2.0, 0.0, 0.0,
-        1.0, -1.0, 2.0, 1.0, 0.0,
-        1.0, 0, 2.0, 1.0, 1.0,
-        -1.0, 0, 2.0, 0.0, 1.0, 
+        -1.0, -1.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+        1.0, -1.0, 2.0, 1.0, 0.0, 0.0, 0.0, 1.0,
+        1.0, 0, 2.0, 1.0, 1.0, 0.0, 0.0, 1.0,
+        -1.0, 0, 2.0, 0.0, 1.0,  0.0, 0.0, 1.0,
 
         #right
-        1.0, -1.0, 2.0, 0.167, 0.0,
-        1.0, -1.0, 1.0, 0.833, 0.0,
-        1.0, 0, 1.0, 0.833, 1.0,
-        1.0, 0, 2.0, 0.167, 1.0,
+        1.0, -1.0, 2.0, 0.167, 0.0, 1.0, 0.0, 0.0,
+        1.0, -1.0, 1.0, 0.833, 0.0, 1.0, 0.0, 0.0,
+        1.0, 0, 1.0, 0.833, 1.0, 1.0, 0.0, 0.0,
+        1.0, 0, 2.0, 0.167, 1.0, 1.0, 0.0, 0.0,
 
         #back
-        -1.0, -1.0, 1.0, 0.0, 0.0,
-        1.0, -1.0, 1.0, 1.0, 0.0,
-        1.0, 0, 1.0, 1.0, 1.0,
-        -1.0, 0, 1.0, 0.0, 1.0, 
+        -1.0, -1.0, 1.0, 0.0, 0.0, 0.0, 0.0, -1.0,
+        1.0, -1.0, 1.0, 1.0, 0.0, 0.0, 0.0, -1.0,
+        1.0, 0, 1.0, 1.0, 1.0, 0.0, 0.0, -1.0,
+        -1.0, 0, 1.0, 0.0, 1.0, 0.0, 0.0, -1.0,
 
         #left
-        -1.0, -1.0, 2.0, 0.167, 0.0,
-        -1.0, -1.0, 1.0, 0.833, 0.0,
-        -1.0, 0, 1.0, 0.833, 1.0,
-        -1.0, 0, 2.0, 0.167, 1.0,
+        -1.0, -1.0, 2.0, 0.167, 0.0, -1.0, 0.0, 0.0,
+        -1.0, -1.0, 1.0, 0.833, 0.0, -1.0, 0.0, 0.0,
+        -1.0, 0, 1.0, 0.833, 1.0, -1.0, 0.0, 0.0,
+        -1.0, 0, 2.0, 0.167, 1.0, -1.0, 0.0, 0.0,
 
         #top
-        -1.0, 0, 2.0, 0.0, 0.0,
-        1.0, 0, 2.0, 1.0, 0.0,
-        1.0, 0, 1.0, 1.0, 1.0,
-        -1.0, 0, 1.0, 0.0, 1.0, 
+        -1.0, 0, 2.0, 0.0, 0.0, 0.0, 1.0, 0.0,
+        1.0, 0, 2.0, 1.0, 0.0, 0.0, 1.0, 0.0,
+        1.0, 0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0,
+        -1.0, 0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0,
 
         #bottom
-        -1.0, -1.0, 2.0, 0.0, 0.0,
-        1.0, -1.0, 2.0, 1.0, 0.0,
-        1.0, -1.0, 1.0, 1.0, 1.0,
-        -1.0, -1.0, 1.0, 0.0, 1.0 
+        -1.0, -1.0, 2.0, 0.0, 0.0, 0.0, -1.0, 0.0,
+        1.0, -1.0, 2.0, 1.0, 0.0, 0.0, -1.0, 0.0,
+        1.0, -1.0, 1.0, 1.0, 1.0, 0.0, -1.0, 0.0,
+        -1.0, -1.0, 1.0, 0.0, 1.0, 0.0, -1.0, 0.0
     ]
 
     car_back = numpy.array(car_back, dtype=numpy.float32)
@@ -267,8 +284,9 @@ def main():
     glBindVertexArray(VAO_car)
     VBO_car = glGenBuffers(1)
     glBindBuffer(GL_ARRAY_BUFFER, VBO_car)
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, car_back.itemsize * 5, ctypes.c_void_p(0))
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, car_back.itemsize * 5, ctypes.c_void_p(12))
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, car_back.itemsize * 8, ctypes.c_void_p(0))
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, car_back.itemsize * 8, ctypes.c_void_p(12))
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, car_back.itemsize * 8, ctypes.c_void_p(20))
 
     EBO = glGenBuffers(1)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO)
@@ -291,20 +309,40 @@ def main():
 
         glEnableVertexAttribArray(0)
         glEnableVertexAttribArray(1)
+        glEnableVertexAttribArray(2)
 
         glUseProgram(car_program)
 
         wheel_positions = [(1.0, -1.0, 1.0), (-1.2, -1.0, 1.0), (-1.2, -1.0, -2.0), (1.0, -1.0, -2.0)]
 
-        glUniformMatrix4fv(wheel_proj_loc, 1, GL_FALSE, projection)
+        glUniformMatrix4fv(car_proj_loc, 1, GL_FALSE, projection)
 
-        glUniformMatrix4fv(wheel_view_loc, 1, GL_FALSE, view)
+        glUniformMatrix4fv(car_view_loc, 1, GL_FALSE, view)
 
         for i in range(len(wheel_positions)):
             wheel_model = matrix44.create_from_translation(wheel_positions[i])
-            glUniformMatrix4fv(wheel_model_loc, 1, GL_FALSE, wheel_model)
+            glUniformMatrix4fv(car_model_loc, 1, GL_FALSE, wheel_model)
             glBindTexture(GL_TEXTURE_2D, roda)
             glDrawArrays(GL_TRIANGLES, 0, len(circle))
+
+        #Gambar Mobil
+        glBindVertexArray(VAO_car)
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_car)
+        glBufferData(GL_ARRAY_BUFFER, car_back.itemsize * len(car_back), car_back, GL_STATIC_DRAW)
+
+        glUniformMatrix4fv(car_proj_loc, 1, GL_FALSE, projection)
+
+        glUniformMatrix4fv(car_view_loc, 1, GL_FALSE, view)
+
+        car_model = matrix44.create_from_translation((0,0,0))
+        glUniformMatrix4fv(car_model_loc, 1, GL_FALSE, car_model)
+        glBindTexture(GL_TEXTURE_2D, metal)
+        glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, None)
+
+        glBufferData(GL_ARRAY_BUFFER, car_front.itemsize * len(car_front), car_front, GL_STATIC_DRAW)
+        glBindTexture(GL_TEXTURE_2D, metal2)
+        glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, None)
+
 
         glBindVertexArray(VAO_wheel)
         glBindBuffer(GL_ARRAY_BUFFER, VBO_wheel)
@@ -322,32 +360,6 @@ def main():
             wheel_model = matrix44.create_from_translation(wheel_positions[i])
             glUniformMatrix4fv(wheel_model_loc, 1, GL_FALSE, wheel_model)
             glDrawArrays(GL_TRIANGLES, 0, len(thickness))
-
-        #Gambar Mobil
-        glBindVertexArray(VAO_car)
-        glBindBuffer(GL_ARRAY_BUFFER, VBO_car)
-        glBufferData(GL_ARRAY_BUFFER, car_back.itemsize * len(car_back), car_back, GL_STATIC_DRAW)
-
-        # position
-        glEnableVertexAttribArray(0)
-
-        # textures
-        glEnableVertexAttribArray(1)
-
-        glUseProgram(car_program)
-
-        glUniformMatrix4fv(car_proj_loc, 1, GL_FALSE, projection)
-
-        glUniformMatrix4fv(car_view_loc, 1, GL_FALSE, view)
-
-        car_model = matrix44.create_from_translation((0,0,0))
-        glUniformMatrix4fv(car_model_loc, 1, GL_FALSE, car_model)
-        glBindTexture(GL_TEXTURE_2D, metal)
-        glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, None)
-
-        glBufferData(GL_ARRAY_BUFFER, car_front.itemsize * len(car_front), car_front, GL_STATIC_DRAW)
-        glBindTexture(GL_TEXTURE_2D, metal2)
-        glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, None)
 
         glfw.swap_buffers(window)
 
