@@ -82,6 +82,14 @@ def do_movement():
         cam.process_keyboard("LEFT", 0.05)
     if keys[glfw.KEY_D]:
         cam.process_keyboard("RIGHT", 0.05)
+    if keys[glfw.KEY_RIGHT]:
+        cam.process_mouse_movement(-5,0)
+    if keys[glfw.KEY_LEFT]:
+        cam.process_mouse_movement(5,0)
+    if keys[glfw.KEY_UP]:
+        cam.process_mouse_movement(0,-5)
+    if keys[glfw.KEY_DOWN]:
+        cam.process_mouse_movement(0,5)
 
 
 def mouse_callback(window, xpos, ypos):

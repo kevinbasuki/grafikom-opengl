@@ -126,6 +126,14 @@ def do_movement():
         cam.process_keyboard("LEFT", 0.05)
     if keys[glfw.KEY_D]:
         cam.process_keyboard("RIGHT", 0.05)
+    if keys[glfw.KEY_RIGHT]:
+        cam.process_mouse_movement(-5,0)
+    if keys[glfw.KEY_LEFT]:
+        cam.process_mouse_movement(5,0)
+    if keys[glfw.KEY_UP]:
+        cam.process_mouse_movement(0,-5)
+    if keys[glfw.KEY_DOWN]:
+        cam.process_mouse_movement(0,5)
 
 
 def mouse_callback(window, xpos, ypos):
@@ -268,12 +276,13 @@ def main():
 
     rainparticles = numpy.array(rainparticles, dtype=numpy.float32)
 
-    smokes = spawnSmoke(10)
+    smokes = spawnSmoke(5)
     smokeparticles = []
     for smoke in smokes:
         smokeparticles.append(smoke.position[0])
         smokeparticles.append(smoke.position[1])
         smokeparticles.append(smoke.position[2])
+        smokeparticles.append(smoke.opacity)
 
     smokeparticles = numpy.array(smokeparticles, dtype=numpy.float32)
 
@@ -309,7 +318,6 @@ def main():
     smoke_view_loc = glGetUniformLocation(smoke_program, "view")
     smoke_proj_loc = glGetUniformLocation(smoke_program, "proj")
 
-
     VAO_wheel = glGenVertexArrays(1)
     glBindVertexArray(VAO_wheel)
     VBO_wheel = glGenBuffers(1)
@@ -338,7 +346,8 @@ def main():
     glBindVertexArray(VAO_smoke)
     VBO_smoke = glGenBuffers(1)
     glBindBuffer(GL_ARRAY_BUFFER, VBO_smoke)
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, smokeparticles.itemsize * 3, ctypes.c_void_p(0))
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, smokeparticles.itemsize * 4, ctypes.c_void_p(0))
+    glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, smokeparticles.itemsize * 4, ctypes.c_void_p(12))
 
     metal = TextureLoader.load_texture("Textures/badan_samping.jpg")
     metal2 = TextureLoader.load_texture("Textures/kap_samping.jpg")
@@ -411,6 +420,8 @@ def main():
             glUniformMatrix4fv(wheel_model_loc, 1, GL_FALSE, wheel_model)
             glDrawArrays(GL_TRIANGLES, 0, len(thickness))
 
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
         glBindVertexArray(VAO_rain)
         glBindBuffer(GL_ARRAY_BUFFER, VBO_rain)
         glBufferData(GL_ARRAY_BUFFER, rainparticles.itemsize * len(rainparticles), rainparticles, GL_STATIC_DRAW)
@@ -440,6 +451,7 @@ def main():
 
         glDrawArrays(GL_POINTS, 0, len(smokeparticles))
 
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         updateRain(rains)
 
@@ -459,7 +471,7 @@ def main():
 
         updateSmoke(smokes)
 
-        added_smokes = spawnSmoke(10)
+        added_smokes = spawnSmoke(4)
 
         for added_smoke in added_smokes:
             smokes.append(added_smoke)
@@ -469,11 +481,9 @@ def main():
             smokeparticles.append(smoke.position[0])
             smokeparticles.append(smoke.position[1])
             smokeparticles.append(smoke.position[2])
+            smokeparticles.append(smoke.opacity)
 
         smokeparticles = numpy.array(smokeparticles, dtype=numpy.float32)
-
-
-
 
         glfw.swap_buffers(window)
 
