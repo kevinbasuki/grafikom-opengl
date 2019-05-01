@@ -20,7 +20,7 @@ def spawnRain(n):
 def updateRain(particles):
 	for particle in particles:
 		particle.position[1] -= particle.velocity
-		if (particle.position[1] < -2.0):
+		if (particle.position[1] < -1.5):
 			particles.remove(particle)
 
 def spawnSmoke(n):
