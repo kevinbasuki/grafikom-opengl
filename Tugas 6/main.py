@@ -270,7 +270,7 @@ def main():
     rainparticles = numpy.array(rainparticles, dtype=numpy.float32)
 
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
-    glPointSize(1000)
+    #glPointSize(1000)
     car_program = compile_shader("Shaders/CarShader.vs", "Shaders/CarShader.fs")
     wheel_program = compile_shader("Shaders/WheelShader.vs", "Shaders/WheelShader.fs")
     rain_program = compile_shader("Shaders/RainShader.vs", "Shaders/RainShader.fs")
