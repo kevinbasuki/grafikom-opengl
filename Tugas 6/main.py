@@ -274,7 +274,7 @@ def main():
     car_program = compile_shader("Shaders/CarShader.vs", "Shaders/CarShader.fs")
     wheel_program = compile_shader("Shaders/WheelShader.vs", "Shaders/WheelShader.fs")
     rain_program = compile_shader("Shaders/RainShader.vs", "Shaders/RainShader.fs")
-    glClearColor(0.2, 0.3, 0.2, 1.0)
+    glClearColor(0.1, 0.1, 0.1, 1.0)
     glEnable(GL_DEPTH_TEST)
 
     projection = matrix44.create_perspective_projection_matrix(45.0, aspect_ratio, 0.1, 100.0)
