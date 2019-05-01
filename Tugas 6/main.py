@@ -6,6 +6,7 @@ from Camera import Camera
 from ShaderLoader import *
 import TextureLoader
 import math
+from Particles import *
 
 #Constants
 TRIANGLE_AMOUNT = 50
@@ -258,8 +259,21 @@ def main():
 
     indices = numpy.array(indices, dtype=numpy.uint32)
 
+    rains = spawnRain(100)
+
+    rainparticles = []
+    for rain in rains:
+        rainparticles.append(rain.position[0])
+        rainparticles.append(rain.position[1])
+        rainparticles.append(rain.position[2])
+
+    rainparticles = numpy.array(rainparticles, dtype=numpy.float32)
+
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
+    glPointSize(1000)
     car_program = compile_shader("Shaders/CarShader.vs", "Shaders/CarShader.fs")
     wheel_program = compile_shader("Shaders/WheelShader.vs", "Shaders/WheelShader.fs")
+    rain_program = compile_shader("Shaders/RainShader.vs", "Shaders/RainShader.fs")
     glClearColor(0.2, 0.3, 0.2, 1.0)
     glEnable(GL_DEPTH_TEST)
 
@@ -274,6 +288,11 @@ def main():
     wheel_view_loc = glGetUniformLocation(wheel_program, "view")
     wheel_proj_loc = glGetUniformLocation(wheel_program, "proj")
     circle, thickness = generateCircleArray(0, 0, 0, 0.4, 0.2)
+
+    rain_model_loc = glGetUniformLocation(rain_program, "model")
+    rain_view_loc = glGetUniformLocation(rain_program, "view")
+    rain_proj_loc = glGetUniformLocation(rain_program, "proj")
+
 
     VAO_wheel = glGenVertexArrays(1)
     glBindVertexArray(VAO_wheel)
@@ -292,6 +311,12 @@ def main():
     EBO = glGenBuffers(1)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.itemsize * len(indices), indices, GL_STATIC_DRAW)
+
+    VAO_rain = glGenVertexArrays(1)
+    glBindVertexArray(VAO_rain)
+    VBO_rain = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_rain)
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, rainparticles.itemsize * 3, ctypes.c_void_p(0))
 
     metal = TextureLoader.load_texture("Textures/badan_samping.jpg")
     metal2 = TextureLoader.load_texture("Textures/kap_samping.jpg")
@@ -363,6 +388,35 @@ def main():
             wheel_model = matrix44.create_from_translation(wheel_positions[i])
             glUniformMatrix4fv(wheel_model_loc, 1, GL_FALSE, wheel_model)
             glDrawArrays(GL_TRIANGLES, 0, len(thickness))
+
+        glBindVertexArray(VAO_rain)
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_rain)
+        glBufferData(GL_ARRAY_BUFFER, rainparticles.itemsize * len(rainparticles), rainparticles, GL_STATIC_DRAW)
+
+        glEnableVertexAttribArray(0)
+        glUseProgram(rain_program)
+        glUniformMatrix4fv(rain_proj_loc, 1, GL_FALSE, projection)
+        glUniformMatrix4fv(rain_view_loc, 1, GL_FALSE, view)
+
+        rain_model = matrix44.create_from_translation((0,0,0))
+        glUniformMatrix4fv(rain_model_loc, 1, GL_FALSE, rain_model)
+
+        glDrawArrays(GL_POINTS, 0, len(rainparticles))
+
+        updateFrame(rains)
+
+        added_rains = spawnRain(100)
+
+        for added_rain in added_rains:
+            rains.append(added_rain)
+
+        rainparticles = []
+        for rain in rains:
+            rainparticles.append(rain.position[0])
+            rainparticles.append(rain.position[1])
+            rainparticles.append(rain.position[2])
+
+        rainparticles = numpy.array(rainparticles, dtype=numpy.float32)
 
         glfw.swap_buffers(window)
 
