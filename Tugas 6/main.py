@@ -260,7 +260,6 @@ def main():
     indices = numpy.array(indices, dtype=numpy.uint32)
 
     rains = spawnRain(100)
-
     rainparticles = []
     for rain in rains:
         rainparticles.append(rain.position[0])
@@ -269,12 +268,25 @@ def main():
 
     rainparticles = numpy.array(rainparticles, dtype=numpy.float32)
 
+    smokes = spawnSmoke(10)
+    smokeparticles = []
+    for smoke in smokes:
+        smokeparticles.append(smoke.position[0])
+        smokeparticles.append(smoke.position[1])
+        smokeparticles.append(smoke.position[2])
+
+    smokeparticles = numpy.array(smokeparticles, dtype=numpy.float32)
+
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
     #glPointSize(1000)
     car_program = compile_shader("Shaders/CarShader.vs", "Shaders/CarShader.fs")
     wheel_program = compile_shader("Shaders/WheelShader.vs", "Shaders/WheelShader.fs")
     rain_program = compile_shader("Shaders/RainShader.vs", "Shaders/RainShader.fs")
-    glClearColor(0.1, 0.1, 0.1, 1.0)
+    
+    smoke_program = compile_shader("Shaders/SmokeShader.vs", "Shaders/SmokeShader.fs")
+    # glPointSize(10)
+
+    glClearColor(0.0, 0.0, 0.0, 1.0)
     glEnable(GL_DEPTH_TEST)
 
     projection = matrix44.create_perspective_projection_matrix(45.0, aspect_ratio, 0.1, 100.0)
@@ -292,6 +304,10 @@ def main():
     rain_model_loc = glGetUniformLocation(rain_program, "model")
     rain_view_loc = glGetUniformLocation(rain_program, "view")
     rain_proj_loc = glGetUniformLocation(rain_program, "proj")
+
+    smoke_model_loc = glGetUniformLocation(smoke_program, "model")
+    smoke_view_loc = glGetUniformLocation(smoke_program, "view")
+    smoke_proj_loc = glGetUniformLocation(smoke_program, "proj")
 
 
     VAO_wheel = glGenVertexArrays(1)
@@ -317,6 +333,12 @@ def main():
     VBO_rain = glGenBuffers(1)
     glBindBuffer(GL_ARRAY_BUFFER, VBO_rain)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, rainparticles.itemsize * 3, ctypes.c_void_p(0))
+
+    VAO_smoke = glGenVertexArrays(1)
+    glBindVertexArray(VAO_smoke)
+    VBO_smoke = glGenBuffers(1)
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_smoke)
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, smokeparticles.itemsize * 3, ctypes.c_void_p(0))
 
     metal = TextureLoader.load_texture("Textures/badan_samping.jpg")
     metal2 = TextureLoader.load_texture("Textures/kap_samping.jpg")
@@ -403,7 +425,23 @@ def main():
 
         glDrawArrays(GL_POINTS, 0, len(rainparticles))
 
-        updateFrame(rains)
+
+        glBindVertexArray(VAO_smoke)
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_smoke)
+        glBufferData(GL_ARRAY_BUFFER, smokeparticles.itemsize * len(smokeparticles), smokeparticles, GL_STATIC_DRAW)
+
+        glEnableVertexAttribArray(0)
+        glUseProgram(smoke_program)
+        glUniformMatrix4fv(smoke_proj_loc, 1, GL_FALSE, projection)
+        glUniformMatrix4fv(smoke_view_loc, 1, GL_FALSE, view)
+
+        smoke_model = matrix44.create_from_translation((0,0,0))
+        glUniformMatrix4fv(smoke_model_loc, 1, GL_FALSE, smoke_model)
+
+        glDrawArrays(GL_POINTS, 0, len(smokeparticles))
+
+
+        updateRain(rains)
 
         added_rains = spawnRain(100)
 
@@ -417,6 +455,25 @@ def main():
             rainparticles.append(rain.position[2])
 
         rainparticles = numpy.array(rainparticles, dtype=numpy.float32)
+
+
+        updateSmoke(smokes)
+
+        added_smokes = spawnSmoke(10)
+
+        for added_smoke in added_smokes:
+            smokes.append(added_smoke)
+
+        smokeparticles = []
+        for smoke in smokes:
+            smokeparticles.append(smoke.position[0])
+            smokeparticles.append(smoke.position[1])
+            smokeparticles.append(smoke.position[2])
+
+        smokeparticles = numpy.array(smokeparticles, dtype=numpy.float32)
+
+
+
 
         glfw.swap_buffers(window)
 
